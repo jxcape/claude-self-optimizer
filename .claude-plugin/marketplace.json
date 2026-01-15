@@ -1,21 +1,26 @@
 {
   "name": "claude-self-optimizer",
-  "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions",
   "owner": {
-    "name": "jxcape"
+    "name": "jxcape",
+    "email": ""
+  },
+  "metadata": {
+    "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions",
+    "version": "0.1.0"
   },
   "plugins": [
     {
       "name": "self-optimizer",
+      "source": "./",
       "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions based on community best practices from awesome-claude-code",
-      "version": "0.1.0",
-      "source": {
-        "type": "github",
-        "repo": "jxcape/claude-self-optimizer"
-      },
       "category": "productivity",
-      "license": "MIT",
-      "tags": ["optimization", "best-practices", "CLAUDE.md"]
+      "tags": [
+        "optimization",
+        "best-practices",
+        "CLAUDE.md",
+        "awesome-claude-code"
+      ]
     }
-  ]
+  ],
+  "version": "0.1.0"
 }
