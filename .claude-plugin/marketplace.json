@@ -1,12 +1,18 @@
 {
   "name": "claude-self-optimizer",
   "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions",
+  "owner": {
+    "name": "jxcape"
+  },
   "plugins": [
     {
       "name": "self-optimizer",
       "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions based on community best practices from awesome-claude-code",
       "version": "0.1.0",
-      "source": ".."
+      "source": ".",
+      "category": "productivity",
+      "license": "MIT",
+      "tags": ["optimization", "best-practices", "CLAUDE.md"]
     }
   ]
 }
