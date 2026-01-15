@@ -23,7 +23,8 @@ Check if knowledge/catalog.json exists:
 ### Step 2: Session Collection
 
 Collect recent sessions from:
-- Primary: `~/Library/Application Support/Claude/local-agent-mode-sessions/`
+- Primary: `~/.claude/projects/` (CLI sessions, main source)
+- Secondary: `~/Library/Application Support/Claude/local-agent-mode-sessions/` (VM sessions)
 - Fallback: `data/sessions/` (if already collected)
 
 Parameters (from setup checkpoints):
@@ -53,6 +54,42 @@ Analyze collected sessions to identify:
 - Question style (brief vs. detailed)
 - Feedback patterns (positive/negative/neutral)
 - Preference for code vs. explanation
+
+### Step 3.5: Pattern Summary & Focus Selection (Onboarding)
+
+**데이터 기반 온보딩**: 분석 결과를 먼저 보여주고 최적화 영역 선택
+
+```markdown
+## 📊 Your Usage Patterns (Last 7 days, 40 sessions)
+
+### Tool Usage
+| Tool | Count | Pattern |
+|------|-------|---------|
+| Edit | 892 | 코드 수정 중심 |
+| Read | 756 | 탐색 빈번 |
+| Bash | 423 | Git/빌드 작업 |
+| TodoWrite | 312 | 작업 추적 활용 |
+
+### Detected Patterns
+- 🔄 **반복 패턴**: Read → Grep → Edit (탐색 후 수정)
+- 📝 **Git 작업**: 주 15회+ 커밋 관련 작업
+- 🧪 **테스트**: Bash로 테스트 실행 빈번
+
+---
+**어떤 영역을 최적화할까요?**
+```
+
+Use AskUserQuestion:
+```
+Based on your patterns, which areas should we focus on?
+
+[ ] Slash Commands (Recommended) - /commit, /test 등 자동화
+[ ] CLAUDE.md Rules - 프로젝트별 규칙 강화
+[ ] Workflows - TDD, 탐색 패턴 개선
+[ ] All of the above
+```
+
+선택된 영역만 Gap Analysis 진행 → 불필요한 제안 최소화
 
 ### Step 4: Gap Analysis (LLM)
 
@@ -114,6 +151,40 @@ Which optimizations would you like to apply?
 [ ] /context-prime (context loading)
 ```
 
+### Step 6.5: Preview Changes (REQUIRED)
+
+**Before any file modification**, show the exact changes in diff format:
+
+```markdown
+## 📋 Change Preview
+
+### 1. ~/.claude/CLAUDE.md (CLAUDE.md Rules)
+
+\`\`\`diff
+## Git Workflow  ← 추가될 섹션 시작
++
++ ### Commit Convention
++ - Use conventional commit format
++ - Always run tests before commit
++
+\`\`\`
+
+### 2. ~/.claude/commands/commit.md (New File)
+
+\`\`\`markdown
+# /commit
+[Full content preview...]
+\`\`\`
+
+---
+**적용하시겠습니까?** (y/n/수정요청)
+```
+
+**Critical Rules**:
+- CLAUDE.md, PROGRESS.md, 기존 설정 파일 수정 시 **반드시 diff 표시**
+- 사용자가 명시적으로 "적용해줘"/"ㅇㅇ" 하기 전까지 수정 금지
+- 대용량 변경 시 요약 + 전체 diff 링크 제공
+
 ### Step 7: Apply Selected Changes
 
 For approved items:
@@ -122,10 +193,12 @@ For approved items:
 2. **CLAUDE.md Rules**: Append to ~/.claude/CLAUDE.md (with backup)
 3. **Workflows**: Create documentation in project
 
-Always:
-- Create backup before modifying
-- Show diff of changes
-- Confirm success
+**Mandatory Checklist**:
+- [ ] Create backup before modifying (filename.bak.{timestamp})
+- [ ] Show diff preview (Step 6.5) and get explicit approval
+- [ ] Apply changes
+- [ ] Verify by reading modified file
+- [ ] Confirm success to user
 
 ## Output
 
