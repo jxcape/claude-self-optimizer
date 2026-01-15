@@ -28,7 +28,7 @@
 
 ```bash
 # 1. Add marketplace (one-time)
-/plugin marketplace add YOUR_GITHUB/claude-self-optimizer
+/plugin marketplace add jxcape/claude-self-optimizer
 
 # 2. Install plugin
 /plugin install self-optimizer
