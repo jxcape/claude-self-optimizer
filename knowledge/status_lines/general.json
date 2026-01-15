@@ -1,0 +1,76 @@
+{
+  "subcategory": "general",
+  "count": 5,
+  "resources": [
+    {
+      "id": "status-d69e91f3",
+      "name": "CCometixLine - Claude Code Statusline",
+      "category": "Status Lines",
+      "subcategory": "General",
+      "description": "A high-performance Claude Code statusline tool written in Rust with Git integration, usage tracking, interactive TUI configuration, and Claude Code enhancement utilities.",
+      "primary_url": "https://github.com/Haleclipse/CCometixLine",
+      "secondary_url": "",
+      "author": "Haleclipse",
+      "author_url": "",
+      "license": "NOT_FOUND",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "status-4e8a47cf",
+      "name": "ccstatusline",
+      "category": "Status Lines",
+      "subcategory": "General",
+      "description": "A highly customizable status line formatter for Claude Code CLI that displays model info, git branch, token usage, and other metrics in your terminal.",
+      "primary_url": "https://github.com/sirmalloc/ccstatusline",
+      "secondary_url": "https://www.npmjs.com/package/ccstatusline",
+      "author": "sirmalloc",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "status-83779330",
+      "name": "claude-code-statusline",
+      "category": "Status Lines",
+      "subcategory": "General",
+      "description": "Enhanced 4-line statusline for Claude Code with themes, cost tracking, and MCP server monitoring",
+      "primary_url": "https://github.com/rz1989s/claude-code-statusline",
+      "secondary_url": "",
+      "author": "rz1989s",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "status-e3a9d274",
+      "name": "claude-powerline",
+      "category": "Status Lines",
+      "subcategory": "General",
+      "description": "A vim-style powerline statusline for Claude Code with real-time usage tracking, git integration, custom themes, and more",
+      "primary_url": "https://github.com/Owloops/claude-powerline",
+      "secondary_url": "https://www.npmjs.com/package/@owloops/claude-powerline",
+      "author": "Owloops",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "status-bb559460",
+      "name": "claudia-statusline",
+      "category": "Status Lines",
+      "subcategory": "General",
+      "description": "High-performance Rust-based statusline for Claude Code with persistent stats tracking, progress bars, and optional cloud sync. Features SQLite-first persistence, git integration, context progress bars, burn rate calculation, XDG-compliant with theme support (dark/light, NO_COLOR).",
+      "primary_url": "https://github.com/hagan/claudia-statusline",
+      "secondary_url": "",
+      "author": "Hagan Franks",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

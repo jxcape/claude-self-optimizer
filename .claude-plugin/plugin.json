@@ -1,0 +1,72 @@
+{
+  "name": "self-optimizer",
+  "description": "Analyze your Claude Code usage patterns and get personalized optimization suggestions based on community best practices from awesome-claude-code",
+  "version": "0.1.0",
+  "author": {
+    "name": "xcape",
+    "url": "https://github.com/xcape"
+  },
+  "repository": "https://github.com/xcape/claude-self-optimizer",
+  "keywords": [
+    "optimization",
+    "patterns",
+    "best-practices",
+    "CLAUDE.md",
+    "self-improvement",
+    "personalization"
+  ],
+  "license": "MIT",
+  "engines": {
+    "claude-code": ">=1.0.33"
+  },
+  "setup": {
+    "checkpoints": [
+      {
+        "id": "analysis_days",
+        "title": "Analysis Period",
+        "description": "How many days of session history should be analyzed?",
+        "type": "select",
+        "options": [
+          {"value": "7", "label": "7 days (recommended)"},
+          {"value": "14", "label": "14 days"},
+          {"value": "30", "label": "30 days"}
+        ],
+        "default": "7"
+      },
+      {
+        "id": "auto_sync",
+        "title": "Knowledge Base Sync",
+        "description": "Automatically sync best practices from awesome-claude-code?",
+        "type": "confirm",
+        "default": true
+      },
+      {
+        "id": "focus_areas",
+        "title": "Focus Areas",
+        "description": "Which areas do you want optimization suggestions for?",
+        "type": "multiselect",
+        "options": [
+          {"value": "slash_commands", "label": "Slash Commands"},
+          {"value": "claude_md", "label": "CLAUDE.md Rules"},
+          {"value": "workflows", "label": "Workflows"},
+          {"value": "skills", "label": "Agent Skills"}
+        ],
+        "default": ["slash_commands", "claude_md", "workflows"]
+      }
+    ]
+  },
+  "commands": {
+    "optimize-me": {
+      "description": "One-click optimization: pattern analysis + gap analysis + apply suggestions",
+      "file": "commands/optimize-me.md"
+    },
+    "sync-knowledge": {
+      "description": "Sync best practices from awesome-claude-code repository",
+      "file": "commands/sync-knowledge.md"
+    },
+    "gap-report": {
+      "description": "Generate gap analysis report without applying changes",
+      "file": "commands/gap-report.md"
+    }
+  }
+}

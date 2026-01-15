@@ -1,0 +1,34 @@
+{
+  "subcategory": "general",
+  "count": 2,
+  "resources": [
+    {
+      "id": "client-5cae6333",
+      "name": "Claudable",
+      "category": "Alternative Clients",
+      "subcategory": "General",
+      "description": "Claudable is an open-source web builder that leverages local CLI agents, such as Claude Code and Cursor Agent, to build and deploy products effortlessly.",
+      "primary_url": "https://github.com/opactorai/Claudable",
+      "secondary_url": "",
+      "author": "Ethan Park",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "client-b6c9db9e",
+      "name": "Omnara",
+      "category": "Alternative Clients",
+      "subcategory": "General",
+      "description": "A command center for AI agents that syncs Claude Code sessions across terminal, web, and mobile. Allows for remote monitoring, human-in-the-loop interaction, and team collaboration.",
+      "primary_url": "https://github.com/omnara-ai/omnara",
+      "secondary_url": "https://omnara.com",
+      "author": "Ishaan Sehgal",
+      "author_url": "",
+      "license": "Apache-2.0",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

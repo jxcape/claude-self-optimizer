@@ -1,0 +1,9 @@
+{
+  "category": "slash_commands",
+  "total_resources": 18,
+  "subcategories": {
+    "other": 10,
+    "testing": 7,
+    "context": 1
+  }
+}

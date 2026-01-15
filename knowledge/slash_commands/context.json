@@ -1,0 +1,20 @@
+{
+  "subcategory": "context",
+  "count": 1,
+  "resources": [
+    {
+      "id": "cmd-6467d59f",
+      "name": "/reminder",
+      "category": "Slash-Commands",
+      "subcategory": "Context Loading & Priming",
+      "description": "Re-establishes project context after conversation breaks or compaction, restoring context and fixing guideline inconsistencies for complex implementations.",
+      "primary_url": "https://github.com/cmxela/thinkube/blob/main/.claude/commands/reminder.md",
+      "secondary_url": "",
+      "author": "cmxela",
+      "author_url": "",
+      "license": "NOT_FOUND",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

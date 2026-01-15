@@ -1,0 +1,34 @@
+{
+  "subcategory": "general",
+  "count": 2,
+  "resources": [
+    {
+      "id": "output-447d1481",
+      "name": "Awesome Claude Code Output Styles (That I Really Like)",
+      "category": "Output Styles",
+      "subcategory": "General",
+      "description": "A fun and moderately amusing collection of experimental output styles.",
+      "primary_url": "https://github.com/hesreallyhim/awesome-claude-code-output-styles-that-i-really-like",
+      "secondary_url": "",
+      "author": "Really Him",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "output-ade86de0",
+      "name": "Gen-Alpha Slang",
+      "category": "Output Styles",
+      "subcategory": "General",
+      "description": "This is really... different. I don't know what to say about this one. It does what it says on the tin. You might find it funny, you might want throw up. I'll just say candidly this is included strictly for its potentially comedic awesomeness.",
+      "primary_url": "https://github.com/sjnims/gen-alpha-output-style",
+      "secondary_url": "",
+      "author": "Steve Nims",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

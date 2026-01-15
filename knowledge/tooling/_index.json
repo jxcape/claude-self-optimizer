@@ -1,0 +1,10 @@
+{
+  "category": "tooling",
+  "total_resources": 32,
+  "subcategories": {
+    "general": 16,
+    "ide_integrations": 5,
+    "usage_monitors": 4,
+    "orchestrators": 7
+  }
+}
