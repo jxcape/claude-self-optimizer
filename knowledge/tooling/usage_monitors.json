@@ -1,0 +1,62 @@
+{
+  "subcategory": "usage_monitors",
+  "count": 4,
+  "resources": [
+    {
+      "id": "tool-631dbe0f",
+      "name": "CC Usage",
+      "category": "Tooling",
+      "subcategory": "Usage Monitors",
+      "description": "Handy CLI tool for managing and analyzing Claude Code usage, based on analyzing local Claude Code logs. Presents a nice dashboard regarding cost information, token consumption, etc.",
+      "primary_url": "https://github.com/ryoppippi/ccusage",
+      "secondary_url": "",
+      "author": "ryoppippi",
+      "author_url": "",
+      "license": "NOASSERTION",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "tool-fe142d2f",
+      "name": "ccflare -> **better-ccflare**",
+      "category": "Tooling",
+      "subcategory": "Usage Monitors",
+      "description": "A well-maintained and feature-enhanced fork of the glorious `ccflare` usage dashboard by @snipeship (which at the time of writing has not had an update in a few months). `better-ccflare` builds on this foundation with some performance enhancements, extended provider support, bug fixes, Docker deployment, and more.",
+      "primary_url": "https://github.com/tombii/better-ccflare/",
+      "secondary_url": "",
+      "author": "tombii",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "tool-61d0c1d6",
+      "name": "Claudex",
+      "category": "Tooling",
+      "subcategory": "Usage Monitors",
+      "description": "Claudex - A web-based browser for exploring your Claude Code conversation history across projects. Indexes your codebase for full-text search. Nice, easy-to-navigate UI. Simple dashboard interface for high-level analytics, and multiple export options as well. (And completely local w/ no telemetry!)",
+      "primary_url": "https://github.com/kunwar-shah/claudex",
+      "secondary_url": "https://kunwar-shah.github.io/claudex/#/",
+      "author": "Kunwar Shah",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "tool-a375ba14",
+      "name": "viberank",
+      "category": "Tooling",
+      "subcategory": "Usage Monitors",
+      "description": "A community-driven leaderboard tool that enables developers to visualize, track, and compete based on their Claude Code usage statistics. It features robust data analytics, GitHub OAuth, data validation, and user-friendly CLI/web submission methods.",
+      "primary_url": "https://github.com/sculptdotfun/viberank",
+      "secondary_url": "",
+      "author": "nikshepsvn",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

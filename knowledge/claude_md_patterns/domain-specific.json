@@ -1,0 +1,34 @@
+{
+  "subcategory": "domain-specific",
+  "count": 2,
+  "resources": [
+    {
+      "id": "claude-d97bf254",
+      "name": "Note Companion",
+      "category": "CLAUDE.md Files",
+      "subcategory": "Domain-Specific",
+      "description": "Provides detailed styling isolation techniques for Obsidian plugins using Tailwind with custom prefix to prevent style conflicts and practical troubleshooting steps.",
+      "primary_url": "https://github.com/different-ai/note-companion/blob/master/CLAUDE.md",
+      "secondary_url": "",
+      "author": "different-ai",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "claude-5479b4e8",
+      "name": "Pareto Mac",
+      "category": "CLAUDE.md Files",
+      "subcategory": "Domain-Specific",
+      "description": "Serves as development guide for Mac security audit tool with build instructions, contribution guidelines, testing procedures, and workflow documentation.",
+      "primary_url": "https://github.com/ParetoSecurity/pareto-mac/blob/main/CLAUDE.md",
+      "secondary_url": "",
+      "author": "ParetoSecurity",
+      "author_url": "",
+      "license": "GPL-3.0",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

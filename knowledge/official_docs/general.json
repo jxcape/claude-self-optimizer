@@ -1,0 +1,48 @@
+{
+  "subcategory": "general",
+  "count": 3,
+  "resources": [
+    {
+      "id": "doc-93f22142",
+      "name": "Anthropic Documentation",
+      "category": "Official Documentation",
+      "subcategory": "General",
+      "description": "The official documentation for Claude Code, including installation instructions, usage guidelines, API references, tutorials, examples, loads of information that I won't list individually. Like Claude Code, the documentation is frequently updated.",
+      "primary_url": "https://docs.claude.com/en/home",
+      "secondary_url": "",
+      "author": "Anthropic",
+      "author_url": "",
+      "license": "&copy;",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "doc-b71240b4",
+      "name": "Anthropic Quickstarts",
+      "category": "Official Documentation",
+      "subcategory": "General",
+      "description": "Offers comprehensive development guides for three distinct AI-powered demo projects with standardized workflows, strict code style guidelines, and containerization instructions.",
+      "primary_url": "https://github.com/anthropics/claude-quickstarts",
+      "secondary_url": "",
+      "author": "Anthropic",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    },
+    {
+      "id": "doc-9703ea36",
+      "name": "Claude Code GitHub Actions",
+      "category": "Official Documentation",
+      "subcategory": "General",
+      "description": "Official GitHub Actions integration for Claude Code with examples and documentation for automating AI-powered workflows in CI/CD pipelines.",
+      "primary_url": "https://github.com/anthropics/claude-code-action/tree/main/examples",
+      "secondary_url": "",
+      "author": "Anthropic",
+      "author_url": "",
+      "license": "MIT",
+      "added_date": "",
+      "last_checked": ""
+    }
+  ]
+}

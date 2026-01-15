@@ -1,0 +1,591 @@
+{
+  "version": "1.0.0",
+  "last_synced": "2026-01-15T15:52:50.948399",
+  "source": "https://github.com/hesreallyhim/awesome-claude-code",
+  "source_file": "THE_RESOURCES_TABLE.csv",
+  "categories": {
+    "skills": [
+      {
+        "id": "skill-50f919d5",
+        "name": "Claude Codex Settings",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-aeb4b7fa",
+        "name": "Claude Mountaineering Skills",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-faba0faa",
+        "name": "Codex Skill",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-e5b92436",
+        "name": "Context Engineering Kit",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-294cc93f",
+        "name": "Superpowers",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-bc4e0f53",
+        "name": "TÂCHES Claude Code Resources",
+        "subcategory": "general"
+      },
+      {
+        "id": "skill-1fc653a0",
+        "name": "Web Assets Generator Skill",
+        "subcategory": "general"
+      }
+    ],
+    "workflows": [
+      {
+        "id": "wf-996c4dd3",
+        "name": "AB Method",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-7d4f4706",
+        "name": "Agentic Workflow Patterns",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-8376d518",
+        "name": "Blogging Platform Instructions",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-af6dda20",
+        "name": "Claude Code Documentation Mirror",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-fd5a0e6b",
+        "name": "Claude Code Handbook",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-82428576",
+        "name": "Claude Code Infrastructure Showcase",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-fc9e9c97",
+        "name": "Claude Code Repos Index",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-b3c6f3e1",
+        "name": "Claude Code System Prompts",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-cb2d350a",
+        "name": "Claude Code Tips",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-84b47071",
+        "name": "Claude CodePro",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-dfd3f3db",
+        "name": "claude-code-docs",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-666ef1b9",
+        "name": "ClaudoPro Directory",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-a50134d3",
+        "name": "learn-faster-kit",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-bdb46cd1",
+        "name": "Project Management, Implementation, Planning, and Release",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-42a8d5a5",
+        "name": "Project Workflow System",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-eee9a073",
+        "name": "Shipping Real Code w/ Claude",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-b6f047e2",
+        "name": "Slash-commands megalist",
+        "subcategory": "general"
+      },
+      {
+        "id": "wf-8ceac0c4",
+        "name": "Ralph for Claude Code",
+        "subcategory": "ralph_wiggum"
+      },
+      {
+        "id": "wf-2fdeff7e",
+        "name": "Ralph Wiggum Marketer",
+        "subcategory": "ralph_wiggum"
+      },
+      {
+        "id": "wf-5e01a9a6",
+        "name": "Ralph Wiggum Plugin",
+        "subcategory": "ralph_wiggum"
+      },
+      {
+        "id": "wf-bc51a50b",
+        "name": "ralph-orchestrator",
+        "subcategory": "ralph_wiggum"
+      },
+      {
+        "id": "wf-aa051a6c",
+        "name": "The Ralph Playbook",
+        "subcategory": "ralph_wiggum"
+      }
+    ],
+    "tooling": [
+      {
+        "id": "tool-9f8d507e",
+        "name": "cc-sessions",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-edd83641",
+        "name": "cc-tools",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-b7bb841e",
+        "name": "ccexp",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-d9c9bde8",
+        "name": "cchistory",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-d95e578f",
+        "name": "Claude Code Templates",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-3bb5a470",
+        "name": "claude-code-tools",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-8b0193b7",
+        "name": "claude-starter-kit",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-b3562922",
+        "name": "ContextKit",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-6e6f1ae1",
+        "name": "recall",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-5845fda0",
+        "name": "Rulesync",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-4a5cf064",
+        "name": "stt-mcp-server-linux",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-5f5d572e",
+        "name": "SuperClaude",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-8d2e7868",
+        "name": "tweakcc",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-0b63c72c",
+        "name": "Vibe-Log",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-fcf2812e",
+        "name": "viwo-cli",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-1e4657fd",
+        "name": "VoiceMode MCP",
+        "subcategory": "general"
+      },
+      {
+        "id": "tool-984936a7",
+        "name": "Claude Code Chat",
+        "subcategory": "ide_integrations"
+      },
+      {
+        "id": "tool-5ab1a854",
+        "name": "claude-code-ide.el",
+        "subcategory": "ide_integrations"
+      },
+      {
+        "id": "tool-941ef941",
+        "name": "claude-code.el",
+        "subcategory": "ide_integrations"
+      },
+      {
+        "id": "tool-7e19bf77",
+        "name": "Claudix - Claude Code for VSCode",
+        "subcategory": "ide_integrations"
+      },
+      {
+        "id": "tool-1c31f36c",
+        "name": "crystal",
+        "subcategory": "ide_integrations"
+      },
+      {
+        "id": "tool-631dbe0f",
+        "name": "CC Usage",
+        "subcategory": "usage_monitors"
+      },
+      {
+        "id": "tool-fe142d2f",
+        "name": "ccflare -> **better-ccflare**",
+        "subcategory": "usage_monitors"
+      },
+      {
+        "id": "tool-61d0c1d6",
+        "name": "Claudex",
+        "subcategory": "usage_monitors"
+      },
+      {
+        "id": "tool-a375ba14",
+        "name": "viberank",
+        "subcategory": "usage_monitors"
+      },
+      {
+        "id": "tool-3b3bedca",
+        "name": "Claude Code Flow",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-5d0685f2",
+        "name": "Claude Squad",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-1af2fe4c",
+        "name": "Claude Swarm",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-a1e3d643",
+        "name": "Claude Task Master",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-b4facb98",
+        "name": "Happy Coder",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-9c3f497a",
+        "name": "The Agentic Startup",
+        "subcategory": "orchestrators"
+      },
+      {
+        "id": "tool-5fb873b1",
+        "name": "TSK - AI Agent Task Manager and Sandbox",
+        "subcategory": "orchestrators"
+      }
+    ],
+    "status_lines": [
+      {
+        "id": "status-d69e91f3",
+        "name": "CCometixLine - Claude Code Statusline",
+        "subcategory": "general"
+      },
+      {
+        "id": "status-4e8a47cf",
+        "name": "ccstatusline",
+        "subcategory": "general"
+      },
+      {
+        "id": "status-83779330",
+        "name": "claude-code-statusline",
+        "subcategory": "general"
+      },
+      {
+        "id": "status-e3a9d274",
+        "name": "claude-powerline",
+        "subcategory": "general"
+      },
+      {
+        "id": "status-bb559460",
+        "name": "claudia-statusline",
+        "subcategory": "general"
+      }
+    ],
+    "hooks": [
+      {
+        "id": "hook-73da34c7",
+        "name": "Britfix",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-26657310",
+        "name": "cchooks",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-4b08835a",
+        "name": "Claude Code Hook Comms (HCOM)",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-61fc561a",
+        "name": "claude-code-hooks-sdk",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-9cfa9465",
+        "name": "Claudio",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-fb83c94c",
+        "name": "fcakyon Collection (Code Quality and Tool Usage)",
+        "subcategory": "general"
+      },
+      {
+        "id": "hook-2b995e52",
+        "name": "TDD Guard",
+        "subcategory": "general"
+      }
+    ],
+    "slash_commands": [
+      {
+        "id": "cmd-b37060d6",
+        "name": "/linux-desktop-slash-commands",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-9d234db1",
+        "name": "/analyze-issue",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-416793e8",
+        "name": "/create-docs",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-19f297bd",
+        "name": "/build-react-app",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-fdc46b4a",
+        "name": "/run-pre-commit",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-2981aaf0",
+        "name": "/do-issue",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-f5425f91",
+        "name": "/next-task",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-089f917a",
+        "name": "/act",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-48cb3d9e",
+        "name": "/dump",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-6581d11f",
+        "name": "/five",
+        "subcategory": "other"
+      },
+      {
+        "id": "cmd-884d2f7b",
+        "name": "/analyze-code",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-9944dc47",
+        "name": "/clean",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-e6804b12",
+        "name": "/implement-issue",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-0ff45c34",
+        "name": "/implement-task",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-1ba4d44c",
+        "name": "/task-breakdown",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-cccacca2",
+        "name": "/tdd-implement",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-7991e9fb",
+        "name": "/testing_plan_integration",
+        "subcategory": "testing"
+      },
+      {
+        "id": "cmd-6467d59f",
+        "name": "/reminder",
+        "subcategory": "context"
+      }
+    ],
+    "claude_md_patterns": [
+      {
+        "id": "claude-bbaa0c15",
+        "name": "AWS MCP Server",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-3ae444b3",
+        "name": "Giselle",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-b302b042",
+        "name": "HASH",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-1821727a",
+        "name": "JSBeeb",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-2a18266c",
+        "name": "LangGraphJS",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-38b6b458",
+        "name": "Metabase",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-8ff859d0",
+        "name": "SG Cars Trends Backend",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-28de7758",
+        "name": "SPy",
+        "subcategory": "language-specific"
+      },
+      {
+        "id": "claude-d97bf254",
+        "name": "Note Companion",
+        "subcategory": "domain-specific"
+      },
+      {
+        "id": "claude-5479b4e8",
+        "name": "Pareto Mac",
+        "subcategory": "domain-specific"
+      },
+      {
+        "id": "claude-14f59511",
+        "name": "Basic Memory",
+        "subcategory": "project_scaffolding_and_mcp"
+      },
+      {
+        "id": "claude-36517eea",
+        "name": "MCP Engine",
+        "subcategory": "project_scaffolding_and_mcp"
+      }
+    ],
+    "alternative_clients": [
+      {
+        "id": "client-5cae6333",
+        "name": "Claudable",
+        "subcategory": "general"
+      },
+      {
+        "id": "client-b6c9db9e",
+        "name": "Omnara",
+        "subcategory": "general"
+      }
+    ],
+    "official_docs": [
+      {
+        "id": "doc-93f22142",
+        "name": "Anthropic Documentation",
+        "subcategory": "general"
+      },
+      {
+        "id": "doc-b71240b4",
+        "name": "Anthropic Quickstarts",
+        "subcategory": "general"
+      },
+      {
+        "id": "doc-9703ea36",
+        "name": "Claude Code GitHub Actions",
+        "subcategory": "general"
+      }
+    ],
+    "output_styles": [
+      {
+        "id": "output-447d1481",
+        "name": "Awesome Claude Code Output Styles (That I Really Like)",
+        "subcategory": "general"
+      },
+      {
+        "id": "output-ade86de0",
+        "name": "Gen-Alpha Slang",
+        "subcategory": "general"
+      }
+    ]
+  },
+  "stats": {
+    "total_resources": 110,
+    "skills": 7,
+    "workflows": 22,
+    "tooling": 32,
+    "status_lines": 5,
+    "hooks": 7,
+    "slash_commands": 18,
+    "claude_md_patterns": 12,
+    "alternative_clients": 2,
+    "official_docs": 3,
+    "output_styles": 2
+  }
+}

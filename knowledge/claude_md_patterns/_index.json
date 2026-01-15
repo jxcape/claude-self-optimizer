@@ -1,0 +1,9 @@
+{
+  "category": "claude_md_patterns",
+  "total_resources": 12,
+  "subcategories": {
+    "language-specific": 8,
+    "domain-specific": 2,
+    "project_scaffolding_and_mcp": 2
+  }
+}

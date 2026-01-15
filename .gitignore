@@ -1,0 +1,27 @@
+# Runtime data
+data/sessions/
+data/reports/
+data/proposals/
+data/feedback/
+data/analysis/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# User config (keep defaults, ignore user overrides)
+.claude-plugin/user_config.json
