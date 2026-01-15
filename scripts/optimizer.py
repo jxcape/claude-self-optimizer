@@ -19,19 +19,19 @@ from typing import Dict, List, Any, Optional
 # 설정
 # ============================================================
 
-# Claude Code 세션 저장 경로 (VM 기반)
-SESSION_SOURCE = Path.home() / "Library/Application Support/Claude/local-agent-mode-sessions"
+# Claude Code 세션 저장 경로
+SESSION_SOURCES = [
+    Path.home() / ".claude/projects",  # CLI 세션 (주 저장소)
+    Path.home() / "Library/Application Support/Claude/local-agent-mode-sessions",  # VM 세션
+]
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 KNOWLEDGE_DIR = PROJECT_ROOT / "knowledge"
 SESSIONS_DIR = DATA_DIR / "sessions"
 REPORTS_DIR = DATA_DIR / "reports"
 
-# 세션 파일 패턴
-SESSION_PATTERNS = [
-    "**/audit.jsonl",  # VM 기반 세션 (새 형식)
-    "**/session.json",  # 기존 형식 (fallback)
-]
+# 제외 패턴
+EXCLUDE_PATTERNS = ["agent-"]  # 서브에이전트 파일 제외
 
 
 # ============================================================
@@ -68,37 +68,42 @@ def collect_sessions(days: int = 7) -> List[Dict[str, Any]]:
 
     cutoff_date = datetime.now() - timedelta(days=days)
     sessions = []
+    session_files = []
 
-    # 세션 소스 확인
-    if not SESSION_SOURCE.exists():
-        print(f"  Warning: Session source not found: {SESSION_SOURCE}")
-        if SESSIONS_DIR.exists():
-            session_files = list(SESSIONS_DIR.glob("*.json"))
-            print(f"  Using cached sessions: {len(session_files)} files")
-        else:
-            return sessions
-    else:
-        # audit.jsonl 파일 찾기 (새 형식)
-        session_files = list(SESSION_SOURCE.glob("**/audit.jsonl"))
-        print(f"  Found {len(session_files)} audit.jsonl files")
+    # 모든 세션 소스에서 파일 수집
+    for source in SESSION_SOURCES:
+        if not source.exists():
+            print(f"  Skip: {source.name} (not found)")
+            continue
 
-        # 메타데이터 파일도 찾기
-        meta_files = list(SESSION_SOURCE.glob("**/local_*.json"))
-        print(f"  Found {len(meta_files)} metadata files")
-
-    for session_file in session_files:
-        try:
-            # audit.jsonl 형식 파싱
-            if session_file.name == "audit.jsonl":
-                summary = parse_audit_jsonl(session_file, cutoff_date)
-            else:
-                # 기존 형식
-                with open(session_file, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-                session_date = extract_session_date(data, session_file)
-                if not session_date or session_date < cutoff_date:
+        # CLI 세션 (~/.claude/projects/)
+        if ".claude/projects" in str(source):
+            cli_count = 0
+            for project_dir in source.iterdir():
+                if not project_dir.is_dir():
                     continue
-                summary = extract_session_summary(data, session_file)
+                for f in project_dir.glob("*.jsonl"):
+                    # 서브에이전트 파일 제외
+                    if any(pat in f.name for pat in EXCLUDE_PATTERNS):
+                        continue
+                    session_files.append(("cli", f))
+                    cli_count += 1
+            print(f"  Found {cli_count} CLI sessions in ~/.claude/projects/")
+        else:
+            # VM 세션 (audit.jsonl)
+            vm_files = list(source.glob("**/audit.jsonl"))
+            for f in vm_files:
+                session_files.append(("vm", f))
+            print(f"  Found {len(vm_files)} VM sessions")
+
+    print(f"  Total: {len(session_files)} session files")
+
+    for session_type, session_file in session_files:
+        try:
+            if session_type == "cli":
+                summary = parse_cli_session(session_file, cutoff_date)
+            else:
+                summary = parse_audit_jsonl(session_file, cutoff_date)
 
             if summary:
                 sessions.append(summary)
@@ -106,7 +111,7 @@ def collect_sessions(days: int = 7) -> List[Dict[str, Any]]:
         except Exception as e:
             print(f"  Error parsing {session_file.name}: {e}")
 
-    print(f"  Collected: {len(sessions)} sessions")
+    print(f"  Collected: {len(sessions)} sessions (after date filter)")
     return sessions
 
 
@@ -188,6 +193,83 @@ def parse_audit_jsonl(file_path: Path, cutoff_date: datetime) -> Optional[Dict]:
     return {
         "session_id": session_id or file_path.parent.name,
         "project": project or "Unknown",
+        "message_count": len(messages),
+        "user_messages": user_messages[:5],
+        "first_message": user_messages[0] if user_messages else "",
+        "tools_used": list(set(tool_sequence)),
+        "tool_counts": dict(Counter(tool_sequence)),
+        "tool_sequence": tool_sequence[:30],
+    }
+
+
+def parse_cli_session(file_path: Path, cutoff_date: datetime) -> Optional[Dict]:
+    """CLI 세션 JSONL 파싱 (~/.claude/projects/{project}/{uuid}.jsonl)"""
+
+    messages = []
+    tool_sequence = []
+    user_messages = []
+    session_id = file_path.stem
+    # 프로젝트명 추출: -Users-xcape-gemmy-10-Projects-DAIOps → gemmy/10_Projects/DAIOps
+    project_raw = file_path.parent.name
+    project = project_raw.replace("-Users-xcape-", "").replace("-", "/")
+    created_at = None
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            for line in f:
+                if not line.strip():
+                    continue
+                try:
+                    entry = json.loads(line)
+                    entry_type = entry.get("type")
+
+                    # timestamp 추출 (첫 번째 것 사용)
+                    ts = entry.get("timestamp")
+                    if ts and not created_at:
+                        try:
+                            created_at = datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                        except ValueError:
+                            pass
+
+                    # 사용자 메시지
+                    if entry_type == "user":
+                        msg = entry.get("message", {})
+                        content = msg.get("content", "")
+                        text = extract_text_from_content(content)
+                        # 시스템 태그, 짧은 메시지 제외
+                        if text and len(text) > 10 and not text.startswith("<"):
+                            user_messages.append(text[:500])
+
+                    # 도구 사용 (assistant 메시지)
+                    elif entry_type == "assistant":
+                        msg = entry.get("message", {})
+                        content = msg.get("content", [])
+                        if isinstance(content, list):
+                            for c in content:
+                                if isinstance(c, dict) and c.get("type") == "tool_use":
+                                    tool_sequence.append(c.get("name", "Unknown"))
+
+                    messages.append(entry)
+                except json.JSONDecodeError:
+                    continue
+
+    except Exception as e:
+        print(f"  Error reading {file_path.name}: {e}")
+        return None
+
+    # 날짜 필터
+    if created_at:
+        # timezone aware → naive 변환
+        created_naive = created_at.replace(tzinfo=None) if created_at.tzinfo else created_at
+        if created_naive < cutoff_date:
+            return None
+
+    if not user_messages:
+        return None
+
+    return {
+        "session_id": session_id,
+        "project": project,
         "message_count": len(messages),
         "user_messages": user_messages[:5],
         "first_message": user_messages[0] if user_messages else "",
