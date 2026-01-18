@@ -5,6 +5,13 @@ data/proposals/
 data/feedback/
 data/analysis/
 
+# Local development
+.agent/
+.claude/
+logs/
+parallel_dev/
+*.plist
+
 # Python
 __pycache__/
 *.py[cod]
