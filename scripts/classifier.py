@@ -380,15 +380,20 @@ def classify_all(patterns: dict) -> List[ClassifiedPattern]:
         pattern_list = patterns.get(category, [])
 
         for p_data in pattern_list:
-            # dict → Pattern 변환
-            pattern = Pattern(
-                id=p_data.get("id", ""),
-                type=p_data.get("type", ""),
-                pattern=p_data.get("pattern", ""),
-                frequency=p_data.get("frequency", 0),
-                examples=p_data.get("examples", []),
-                confidence=p_data.get("confidence", 0.0),
-            )
+            # Pattern 객체 또는 dict 처리
+            if hasattr(p_data, 'id'):
+                # 이미 Pattern 객체인 경우
+                pattern = p_data
+            else:
+                # dict인 경우 → Pattern 변환
+                pattern = Pattern(
+                    id=p_data.get("id", ""),
+                    type=p_data.get("type", ""),
+                    pattern=p_data.get("pattern", ""),
+                    frequency=p_data.get("frequency", 0),
+                    examples=p_data.get("examples", []),
+                    confidence=p_data.get("confidence", 0.0),
+                )
 
             result = classify_pattern(pattern)
             classified.append(result)
