@@ -647,8 +647,141 @@ The LLM will:
     }
 
 
+# ============================================================
+# V2: Smart Compression Pipeline
+# ============================================================
+
+def run_optimization_v2(days: int = 7, limit_kb: int = 100, dry_run: bool = False) -> Dict[str, Any]:
+    """V2 최적화 파이프라인 - Smart Compression 기반"""
+
+    from compressor import collect_for_analysis
+    from pattern_extractor import extract_all_patterns, save_patterns
+    from classifier import classify_all, prioritize, save_classified
+    from generate_proposals import load_classified, generate_from_classified, save_proposals_v2
+
+    print("\n" + "=" * 60)
+    print("Self-Optimizer V2 (Smart Compression)")
+    print("=" * 60)
+    print(f"Analysis period: {days} days")
+    print(f"Size limit: {limit_kb}KB")
+
+    # 1. 스마트 압축으로 세션 수집
+    print("\n[Step 1] Collecting & Compressing Sessions...")
+    compressed_sessions = collect_for_analysis(limit_kb=limit_kb, days=days)
+
+    if not compressed_sessions:
+        return {"error": "No sessions found", "sessions": 0}
+
+    total_size = sum(s.size_bytes for s in compressed_sessions)
+    print(f"  Collected: {len(compressed_sessions)} sessions ({total_size / 1024:.1f}KB)")
+
+    # 압축 텍스트 생성
+    compressed_texts = [s.compressed for s in compressed_sessions]
+
+    # 2. 패턴 추출
+    print("\n[Step 2] Extracting Patterns...")
+    patterns = extract_all_patterns(compressed_texts)
+    total_patterns = sum(len(v) for v in patterns.values())
+    print(f"  Found: {total_patterns} patterns")
+    print(f"    - Tool sequences: {len(patterns.get('tool_sequences', []))}")
+    print(f"    - Prompt templates: {len(patterns.get('prompt_templates', []))}")
+    print(f"    - Behavioral: {len(patterns.get('behavioral', []))}")
+
+    # 패턴 저장
+    patterns_dir = DATA_DIR / "analysis" / "patterns"
+    save_patterns(patterns, str(patterns_dir))
+
+    # 3. 분류
+    print("\n[Step 3] Classifying Patterns...")
+    classified = classify_all(patterns)
+    classified = prioritize(classified)
+
+    # 분류 저장
+    classified_dir = DATA_DIR / "analysis" / "classified"
+    save_classified(classified, str(classified_dir))
+
+    # 우선순위별 카운트
+    p1 = len([c for c in classified if c.priority == "P1"])
+    p2 = len([c for c in classified if c.priority == "P2"])
+    p3 = len([c for c in classified if c.priority == "P3"])
+    print(f"  Classified: {len(classified)} suggestions")
+    print(f"    - P1 (high): {p1}")
+    print(f"    - P2 (medium): {p2}")
+    print(f"    - P3 (low): {p3}")
+
+    if dry_run:
+        print("\n[Dry Run] Skipping proposal generation")
+        return {
+            "status": "dry_run",
+            "version": "v2",
+            "sessions": len(compressed_sessions),
+            "patterns": total_patterns,
+            "suggestions": len(classified),
+        }
+
+    # 4. 제안 생성
+    print("\n[Step 4] Generating Proposals...")
+    suggestions = generate_from_classified(classified)
+    report_path = save_proposals_v2(suggestions)
+    print(f"  Saved: {report_path}")
+
+    # 5. 요약 출력
+    print("\n" + "=" * 60)
+    print("V2 Optimization Complete!")
+    print("=" * 60)
+    print(f"""
+Sessions analyzed: {len(compressed_sessions)}
+Patterns found: {total_patterns}
+Suggestions generated: {len(suggestions)}
+  - P1 (apply now): {p1}
+  - P2 (consider): {p2}
+  - P3 (later): {p3}
+
+Report: {report_path}
+
+Next steps:
+1. Review the proposals in the report
+2. Select which to apply
+3. Run with --apply flag or manually apply
+""")
+
+    return {
+        "status": "complete",
+        "version": "v2",
+        "sessions": len(compressed_sessions),
+        "patterns": total_patterns,
+        "suggestions": len(suggestions),
+        "report": str(report_path),
+        "priority_summary": {"P1": p1, "P2": p2, "P3": p3},
+    }
+
+
 if __name__ == "__main__":
     import sys
+
     dry_run = "--dry-run" in sys.argv
-    result = run_optimization(dry_run=dry_run)
+    use_v2 = "--v2" in sys.argv
+
+    if use_v2:
+        # V2 파이프라인
+        days = 7
+        limit_kb = 100
+
+        # --days N 파싱
+        if "--days" in sys.argv:
+            idx = sys.argv.index("--days")
+            if idx + 1 < len(sys.argv):
+                days = int(sys.argv[idx + 1])
+
+        # --limit N 파싱
+        if "--limit" in sys.argv:
+            idx = sys.argv.index("--limit")
+            if idx + 1 < len(sys.argv):
+                limit_kb = int(sys.argv[idx + 1])
+
+        result = run_optimization_v2(days=days, limit_kb=limit_kb, dry_run=dry_run)
+    else:
+        # V1 파이프라인 (기존)
+        result = run_optimization(dry_run=dry_run)
+
     print(f"\nResult: {json.dumps(result, indent=2)}")

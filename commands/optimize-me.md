@@ -5,12 +5,108 @@ One-click optimization: analyze your usage patterns and get personalized suggest
 ## Overview
 
 This is the main command that runs the full optimization pipeline:
-1. Ensure knowledge base is synced
-2. Collect and analyze your sessions
-3. Compare your patterns with best practices (Gap Analysis)
+1. Collect and compress your sessions (V2: Smart Compression)
+2. Extract patterns automatically
+3. Classify and prioritize suggestions
 4. Generate and apply suggestions interactively
 
-## Execution Steps
+## Usage
+
+```bash
+/optimize-me                    # V2 파이프라인 (기본)
+/optimize-me --v2               # V2 명시적 실행
+/optimize-me --dry-run          # 미리보기만 (적용 안 함)
+/optimize-me --days 14          # 분석 기간 변경 (기본: 7일)
+/optimize-me --limit 200        # 압축 크기 제한 (기본: 100KB)
+```
+
+---
+
+## V2 Pipeline (Smart Compression)
+
+### Step 1: Session Collection & Compression
+
+```python
+# scripts/optimizer.py --v2 실행
+python3 scripts/optimizer.py --v2
+```
+
+**동작**:
+- `~/.claude/projects/`에서 최근 세션 수집
+- 스마트 압축 (99% 압축률)
+- 100KB 리미트 기반 동적 수집 (최신 우선)
+
+**출력 예시**:
+```
+[Step 1] Collecting & Compressing Sessions...
+  Collected: 9 sessions (98.9KB)
+```
+
+### Step 2: Pattern Extraction
+
+자동으로 3가지 패턴 추출:
+
+| 패턴 유형 | 설명 | 예시 |
+|-----------|------|------|
+| **Tool Sequences** | 도구 호출 순서 (3-gram) | `Read → Edit → Bash` |
+| **Prompt Templates** | 반복되는 요청 패턴 | `~해줘`, `커밋해줘` |
+| **Behavioral Rules** | 행동 규칙 | 한글 선호, 짧은 세션 |
+
+### Step 3: Classification
+
+패턴을 4가지 타입으로 자동 분류:
+
+| 패턴 | 분류 | 제안 |
+|------|------|------|
+| 도구 시퀀스 반복 | **Skill** | `read-edit-bash.md` |
+| 프롬프트 템플릿 | **Slash Command** | `/commit` |
+| 복잡한 멀티스텝 | **Agent** | `code-reviewer` |
+| 행동 규칙 | **CLAUDE.md Rule** | `Output language: Korean` |
+
+### Step 4: Proposal Generation
+
+우선순위별 제안 생성:
+
+```markdown
+## Priority 1 (High Impact, Easy)
+- [ ] 📋 Output language: Korean (CLAUDE.md rule)
+- [ ] 📋 Prefer short sessions (CLAUDE.md rule)
+
+## Priority 2 (High Impact, Medium Effort)
+- [ ] 🔧 bash-bash-bash.md (skill) - Git 작업 자동화
+- [ ] ⚡ /commit (slash command)
+
+## Priority 3 (Nice to Have)
+- [ ] 🔧 read-edit-bash.md (skill)
+...
+```
+
+### Step 5: Interactive Approval
+
+AskUserQuestion으로 적용할 제안 선택:
+
+```
+Which optimizations would you like to apply?
+
+[x] Output language: Korean (CLAUDE.md)
+[x] /commit command
+[ ] bash-bash-bash.md skill
+```
+
+### Step 6: Apply Changes
+
+선택된 제안 적용:
+1. CLAUDE.md 규칙 → `~/.claude/CLAUDE.md`에 추가
+2. Slash Commands → `~/.claude/commands/`에 생성
+3. Skills → `.claude/skills/`에 생성
+
+**반드시 diff 미리보기 후 사용자 승인 필요**
+
+---
+
+## V1 Pipeline (Legacy)
+
+기존 방식 (LLM 기반 분석):
 
 ### Step 1: Knowledge Base Check
 
