@@ -334,9 +334,11 @@ class Suggestion:
   - [x] 템플릿 기반 코드 생성
   - [x] Markdown 리포트 생성
 
-- [ ] `/optimize-me` 업데이트
-  - [ ] 압축 기반 분석 연동
-  - [ ] 제안 표시 + 승인 흐름
+- [x] `/optimize-me` 업데이트 ✅ 완료
+  - [x] `scripts/optimizer.py`에 `run_optimization_v2()` 추가
+  - [x] `--v2` 플래그로 V2 파이프라인 실행
+  - [x] `commands/optimize-me.md` 문서 업데이트
+  - [ ] 제안 자동 적용 (`--apply` 플래그) - 추후
 
 ### Phase 4: 예약 실행 (2일) 🔜 다음 단계
 
