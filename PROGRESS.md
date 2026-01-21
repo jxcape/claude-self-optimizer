@@ -45,3 +45,65 @@
 ### 남은 작업
 - [ ] Knowledge Base 요약 생성 로직 (sync_knowledge.py 연동)
 - [ ] 실제 /optimize-me 실행 테스트
+
+---
+
+## 2026-01-20: V2 - 해결책 품질 고도화
+
+### 배경
+- 분석은 고도화됨 (구체적 패턴 발견)
+- 해결책이 "CLAUDE.md에 규칙 추가" 일변도 → 뻔하고 실효성 의문
+- 예: "Read 많이 씀" → "탐색형입니다" (피상적) vs "featuremap 만드세요" (실행 가능)
+
+### V2 아키텍처
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    V2 Architecture                          │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  [초기 분석]          [실시간 수집]         [해결책 매핑]   │
+│  세션 전체 분석       Hook 기반 증분        패턴→해결책 DB  │
+│  (1회)               (설치 후 계속)         (지식베이스)    │
+│       │                    │                     │          │
+│       └────────────────────┼─────────────────────┘          │
+│                            ▼                                │
+│                    [Smart Suggestions]                      │
+│                    - 5 Whys 분석                            │
+│                    - 구체적 해결책 (featuremap 등)          │
+│                    - 검증 계획 포함                         │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 구현 계획
+
+#### Phase 1: Hook 시스템 ✅
+- [x] `hooks/pattern_collector.py` - 패턴 수집 훅
+- [x] 툴 호출 패턴 수집 (Read, Grep, Glob, Edit, Write, Task)
+- [x] 사용자 부정적 반응 감지 ("다시해", "틀렸어", "아니", "전부", "왜이렇게")
+- [x] `data/patterns.jsonl`에 증분 저장
+- [x] `scripts/analyze_patterns.py` - 패턴 분석기
+- [x] 설치 가이드 (`hooks/README.md`)
+
+#### Phase 2: 해결책 지식베이스 ✅
+- [x] `knowledge/solutions/patterns.json` - 패턴→해결책 매핑
+- [x] 5 Whys (root_cause) 포함
+- [x] 해결책별 effort/impact 레벨
+- [x] 검증 방법 (verification) 포함
+- [x] `analyze_patterns.py`에 solutions 연동
+
+#### Phase 3: /optimize-me V2 통합 ✅
+- [x] Step 0: Hook 데이터 우선 확인 추가
+- [x] Step 5: 해결책 지식베이스 참조 단계
+- [x] Step 6: 5 Whys + 해결책 유형 다양화 템플릿
+- [x] 해결책 유형: command, workflow, claude_md, hook, process
+
+### 해결책 매핑 예시
+
+| 패턴 | 현재 제안 | 개선된 제안 |
+|------|----------|-------------|
+| Read 많음 | "탐색형입니다" | `/gsd:map-codebase` 실행, featuremap 생성 |
+| Context reset | "체크포인트 규칙" | Hook으로 턴 수 모니터링 + 자동 경고 |
+| 반복 수정 | "빨리 인정하기" | UI 작업 전 wireframe/mockup 확인 단계 |
+| 같은 파일 N번 Read | - | 해당 파일 요약을 CLAUDE.md에 캐싱 |

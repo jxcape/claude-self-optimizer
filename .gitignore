@@ -1,9 +1,11 @@
 # Runtime data
+data/
 data/sessions/
 data/reports/
 data/proposals/
 data/feedback/
 data/analysis/
+data/patterns.jsonl
 
 # Local development
 .agent/

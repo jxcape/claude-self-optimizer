@@ -1,0 +1,233 @@
+{
+  "$schema": "./patterns.schema.json",
+  "version": "1.0.0",
+  "description": "패턴 → 해결책 매핑 지식베이스",
+  "patterns": [
+    {
+      "id": "heavy_exploration",
+      "name": "과도한 탐색",
+      "triggers": {
+        "metrics": ["read_ratio > 0.6", "same_file_reads >= 3"],
+        "signals": ["Grep/Glob 반복", "코드베이스 구조 질문"]
+      },
+      "root_cause": {
+        "why1": "코드베이스 구조를 파악하지 못함",
+        "why2": "핵심 파일/모듈 위치 정보 부재",
+        "why3": "프로젝트 CLAUDE.md에 구조 정보 없음"
+      },
+      "solutions": [
+        {
+          "id": "map_codebase",
+          "type": "command",
+          "action": "/gsd:map-codebase",
+          "description": "코드베이스 맵 자동 생성 (.planning/codebase/)",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "claude_md_structure",
+          "type": "claude_md",
+          "action": "프로젝트 CLAUDE.md에 디렉토리 구조 + 핵심 파일 요약 추가",
+          "template": "## Key Files\\n\\n| Path | Purpose |\\n|------|---------|\\n| src/core.py | Core logic |",
+          "effort": "medium",
+          "impact": "high"
+        }
+      ],
+      "verification": {
+        "method": "다음 5세션 동안 같은 파일 반복 읽기 횟수",
+        "success_criteria": "반복 읽기 50% 감소"
+      }
+    },
+    {
+      "id": "context_reset",
+      "name": "Context 리셋 빈번",
+      "triggers": {
+        "metrics": ["session_turns > 50", "context_reset_count >= 1"],
+        "signals": ["conversation that ran out of context", "이전 대화 이어서"]
+      },
+      "root_cause": {
+        "why1": "세션이 너무 길어짐",
+        "why2": "중간 저장/요약 없이 계속 진행",
+        "why3": "작업 단위 분리 부재"
+      },
+      "solutions": [
+        {
+          "id": "session_checkpoint",
+          "type": "workflow",
+          "action": "긴 작업 중간에 /compact 또는 checkpoint 습관화",
+          "description": "20턴마다 진행 상황 PROGRESS.md에 저장",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "turn_warning_hook",
+          "type": "hook",
+          "action": "턴 수 모니터링 훅 추가",
+          "description": "30턴 초과 시 경고 메시지",
+          "effort": "medium",
+          "impact": "medium"
+        },
+        {
+          "id": "task_splitting",
+          "type": "process",
+          "action": "큰 작업을 독립적인 세션으로 분리",
+          "description": "1세션 = 1기능 원칙",
+          "effort": "low",
+          "impact": "high"
+        }
+      ],
+      "verification": {
+        "method": "context reset 발생 횟수 추적",
+        "success_criteria": "월간 context reset 0회"
+      }
+    },
+    {
+      "id": "repeated_corrections",
+      "name": "반복 수정 요청",
+      "triggers": {
+        "metrics": ["retry_request >= 2", "wrong_output >= 1"],
+        "signals": ["다시해", "틀렸어", "그거 말고", "전부 다 틀렸어"]
+      },
+      "root_cause": {
+        "why1": "요구사항 불명확한 상태로 구현 시작",
+        "why2": "방향 확인 없이 진행",
+        "why3": "spec-interview 또는 wireframe 확인 단계 부재"
+      },
+      "solutions": [
+        {
+          "id": "spec_interview_first",
+          "type": "workflow",
+          "action": "구현 전 /spec-interview 실행",
+          "description": "요구사항 명확화 후 구현 시작",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "direction_checkpoint",
+          "type": "claude_md",
+          "action": "CLAUDE.md에 '방향 확인 체크포인트' 규칙 추가",
+          "template": "## Pre-Implementation\\n- 3개 이상 파일 수정 전: 방향 확인 필수",
+          "effort": "low",
+          "impact": "medium"
+        },
+        {
+          "id": "ui_wireframe",
+          "type": "process",
+          "action": "UI 작업 시 wireframe/mockup 먼저 확인",
+          "description": "코드 작성 전 시각적 확인",
+          "effort": "medium",
+          "impact": "high"
+        }
+      ],
+      "verification": {
+        "method": "negative_reaction 중 retry_request 횟수",
+        "success_criteria": "세션당 retry 1회 이하"
+      }
+    },
+    {
+      "id": "same_file_repeated_reads",
+      "name": "같은 파일 반복 읽기",
+      "triggers": {
+        "metrics": ["file_read_count(same_file) >= 5"],
+        "signals": ["자주 참조하는 파일", "핵심 설정 파일"]
+      },
+      "root_cause": {
+        "why1": "파일 내용을 기억하지 못함",
+        "why2": "context에서 정보 유실",
+        "why3": "캐싱 메커니즘 부재"
+      },
+      "solutions": [
+        {
+          "id": "file_summary_cache",
+          "type": "claude_md",
+          "action": "자주 읽는 파일 요약을 CLAUDE.md에 캐싱",
+          "template": "## Cached Summaries\\n\\n### config.json\\n- key1: description\\n- key2: description",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "specs_reference",
+          "type": "process",
+          "action": "핵심 정보를 specs/에 문서화",
+          "description": "DB 스키마, API 구조 등",
+          "effort": "medium",
+          "impact": "high"
+        }
+      ],
+      "verification": {
+        "method": "동일 파일 반복 읽기 횟수",
+        "success_criteria": "같은 파일 3회 이상 읽기 0건"
+      }
+    },
+    {
+      "id": "shallow_analysis",
+      "name": "피상적 분석 제안",
+      "triggers": {
+        "metrics": [],
+        "signals": ["Read 40%니까", "탐색형입니다", "통계 기반 일반론"]
+      },
+      "root_cause": {
+        "why1": "숫자만 보고 의미 해석 안 함",
+        "why2": "도메인 컨텍스트 부재",
+        "why3": "패턴의 근본 원인 분석 부재"
+      },
+      "solutions": [
+        {
+          "id": "five_whys",
+          "type": "process",
+          "action": "5 Whys 분석 필수화",
+          "description": "숫자 → 의미 → 근본 원인 → 해결책 순서",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "domain_context",
+          "type": "process",
+          "action": "도메인/프로젝트 컨텍스트 우선 파악",
+          "description": "어떤 종류의 프로젝트인지 먼저 이해",
+          "effort": "low",
+          "impact": "medium"
+        }
+      ],
+      "verification": {
+        "method": "사용자 피상적 분석 거부 횟수",
+        "success_criteria": "거부 0회"
+      }
+    },
+    {
+      "id": "missing_tests",
+      "name": "테스트 없이 구현",
+      "triggers": {
+        "metrics": ["edit_without_test >= 3"],
+        "signals": ["테스트 안 돌렸네", "버그 재발"]
+      },
+      "root_cause": {
+        "why1": "테스트 작성 습관 부재",
+        "why2": "TDD 워크플로우 미적용",
+        "why3": "/bugfix skill 미사용"
+      },
+      "solutions": [
+        {
+          "id": "bugfix_skill",
+          "type": "command",
+          "action": "버그 수정 시 /bugfix 사용",
+          "description": "실패 테스트 먼저 → 수정 → 통과 확인",
+          "effort": "low",
+          "impact": "high"
+        },
+        {
+          "id": "test_before_commit",
+          "type": "hook",
+          "action": "커밋 전 테스트 실행 훅",
+          "description": "git commit 전 자동 테스트",
+          "effort": "medium",
+          "impact": "high"
+        }
+      ],
+      "verification": {
+        "method": "테스트 없이 머지된 PR 수",
+        "success_criteria": "0건"
+      }
+    }
+  ]
+}

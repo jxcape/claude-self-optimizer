@@ -3,12 +3,23 @@
 세션 분석 → 깊은 수준 개인화 → 제안 → 승인 후 적용
 
 > **LLM First**: Python은 압축만, 모든 분석/판단/제안은 LLM이 직접 수행
+> **V2**: Hook 수집 데이터 우선, 해결책 지식베이스 활용, 5 Whys 분석
 
 ---
 
 ## Execution
 
-### Step 1: 세션 데이터 압축
+### Step 0: Hook 수집 데이터 확인 (우선)
+
+```bash
+# Hook 데이터가 있으면 먼저 분석 (가벼움)
+python3 scripts/analyze_patterns.py --days 30
+```
+
+Hook 데이터가 충분하면 (100+ 패턴) Step 1 스킵 가능.
+없거나 부족하면 Step 1로 진행.
+
+### Step 1: 세션 데이터 압축 (초기/보충용)
 
 ```bash
 python3 scripts/compressor.py --limit 100 --days 30
@@ -18,24 +29,18 @@ python3 scripts/compressor.py --limit 100 --days 30
 
 ### Step 2: Knowledge Base 요약 확인
 
-`knowledge/catalog.json` 또는 아래 베스트 프랙티스 참조:
-
-```markdown
-## 베스트 프랙티스 요약
-
-### 개발 프랙티스
-- TDD: 테스트 먼저 작성 후 구현
-- Spec-first: 스펙 문서 먼저 읽고 구현
-- Clean architecture: 의존성 역전, 레이어 분리
-
-### 세션 관리
-- 한 세션 한 작업 원칙
-- 복잡한 작업은 새 세션에서 시작
-
-### 피드백 방식
-- 구체적 지시: "X 파일의 Y 함수를 Z로 변경"
-- 검증 요청: "빌드 돌려봐", "테스트 통과 확인"
+**필수 파일 읽기**:
+```bash
+Read knowledge/best_practices/summary.md
 ```
+
+베스트 프랙티스 요약 파일에서 다음 섹션 확인:
+- 개발 프랙티스 (TDD, Spec-first, 검증 습관)
+- 세션 관리 (한 세션 한 작업, Context 효율화)
+- 피드백 방식 (구체적 지시, 검증 요청)
+- 흔한 실수 패턴 (검증 누락, Spec 무시, 롤백 반복)
+
+추가 참조: `knowledge/catalog.json` (110+ 리소스 인덱스)
 
 ### Step 3: 깊은 분석 수행
 
@@ -67,7 +72,22 @@ python3 scripts/compressor.py --limit 100 --days 30
 - 글로벌: `~/.claude/CLAUDE.md`
 - 프로젝트별: 프로젝트 내 `CLAUDE.md`
 
-### Step 5: 제안 생성
+### Step 5: 해결책 지식베이스 참조
+
+**필수 파일 읽기**:
+```bash
+Read knowledge/solutions/patterns.json
+```
+
+발견된 패턴을 지식베이스와 매칭:
+- `heavy_exploration` → 탐색 과다
+- `context_reset` → Context 리셋
+- `repeated_corrections` → 반복 수정
+- `same_file_repeated_reads` → 같은 파일 반복
+- `shallow_analysis` → 피상적 분석 (금지)
+- `missing_tests` → 테스트 누락
+
+### Step 6: 제안 생성
 
 ```markdown
 ## 분석 결과
@@ -78,15 +98,15 @@ python3 scripts/compressor.py --limit 100 --days 30
 
 ### 발견된 패턴
 
-#### 실수 패턴
-- [프로젝트] 구체적 실수 설명 (발생 횟수)
-  - 세션: "사용자 발화 인용"
+#### 실수/비효율 패턴
+- **[패턴ID]** [프로젝트] 구체적 설명 (발생 횟수)
+  - 증거: "사용자 발화 인용" 또는 Hook 데이터
+  - **5 Whys**:
+    - Why1: [직접 원인]
+    - Why2: [더 깊은 원인]
+    - Why3: [근본 원인]
 
-#### 비효율 패턴
-- [프로젝트] 비효율 설명
-  - 증거: 세션에서 관찰된 내용
-
-#### 좋은 패턴
+#### 좋은 패턴 (유지)
 - [프로젝트] 유지할 패턴
 
 ---
@@ -94,9 +114,14 @@ python3 scripts/compressor.py --limit 100 --days 30
 ## 제안
 
 ### P1: 즉시 적용 권장
-- [ ] [범위] 규칙 내용
-  - 근거: 세션에서 발견한 증거
-  - 적용: CLAUDE.md 위치 or Skill 파일
+
+| 패턴 | 해결책 | 유형 | Effort | Impact |
+|------|--------|------|--------|--------|
+| [패턴ID] | [action] | command/workflow/claude_md/hook | low/med | high |
+
+- **근거**: 세션/Hook에서 발견한 증거
+- **검증 방법**: [어떻게 효과 측정]
+- **성공 기준**: [언제 성공으로 볼 것인지]
 
 ### P2: 고려
 - [ ] ...
@@ -105,13 +130,20 @@ python3 scripts/compressor.py --limit 100 --days 30
 - [ ] ...
 ```
 
-### Step 6: 사용자 선택
+**해결책 유형**:
+- `command`: /gsd:map-codebase, /bugfix 등 실행
+- `workflow`: 작업 순서/프로세스 변경
+- `claude_md`: CLAUDE.md에 규칙 추가
+- `hook`: 자동화 훅 설치
+- `process`: 습관/방식 변경
+
+### Step 7: 사용자 선택
 
 AskUserQuestion으로 제안 중 적용할 항목 선택:
 - `multiSelect: true`로 복수 선택 가능
 - 각 제안의 근거와 적용 위치 명시
 
-### Step 7: 적용
+### Step 8: 적용
 
 승인된 제안을 적용:
 1. **diff 미리보기 필수** - 변경 내용 보여주기
