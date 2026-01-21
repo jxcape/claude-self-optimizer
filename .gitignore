@@ -34,3 +34,9 @@ Thumbs.db
 
 # User config (keep defaults, ignore user overrides)
 .claude-plugin/user_config.json
+CLAUDE.md
+BUGS.md
+PROGRESS.md
+specs/
+.cross-critic/
+.mcp.json
